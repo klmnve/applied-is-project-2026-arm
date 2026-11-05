@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="kk">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#112c3a">
+    <title>Кафедра АРМ</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <script src="/static/app.js" type="module"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#page-content">Негізгі мазмұнға өту</a>
+    <div id="startup" class="startup" role="status"><span class="spinner"></span>Жүйе ашылуда…</div>
+    <main id="auth-screen" class="auth-screen" hidden>
+      <section class="auth-intro">
+        <a class="auth-brand" href="#login"><span class="brand-symbol" aria-hidden="true">К</span><span>Кафедра АРМ</span></a>
+        <div class="auth-intro-copy"><p class="eyebrow">КАФЕДРАНЫҢ АҚПАРАТТЫҚ ЖҮЙЕСІ</p><h1>Қолжетімділік реттелген.<br>Әрекеттер тіркелген.</h1><p>Пайдаланушылар, ведомостар мен құжаттар — ортақ жұмыс кеңістігінде. Әр өзгерістің авторы мен тарихын қадағалаңыз.</p><div class="auth-principles"><span>Рөлдер мен құқықтар</span><span>Баға өзгерістерінің тарихы</span><span>Сессиялар мен аудит</span></div></div>
+        <p class="auth-footer">Кафедра әкімшісінің автоматтандырылған жұмыс орны</p>
+      </section>
+      <section class="auth-card-wrap"><div class="auth-card">
+        <p class="eyebrow">ЖЕКЕ КАБИНЕТ</p><h2 id="auth-title">Жүйеге кіру</h2><p id="auth-description" class="muted">Жұмыс кеңістігіне кіру үшін тіркелгіңізді пайдаланыңыз.</p>
+        <div class="auth-tabs" role="tablist" aria-label="Кіру немесе тіркелу"><button id="login-tab" type="button" role="tab" aria-selected="true">Кіру</button><button id="register-tab" type="button" role="tab" aria-selected="false">Тіркелу</button></div>
+        <div id="auth-message" class="inline-message" role="status" hidden></div>
+        <form id="auth-form">
+          <div id="display-name-field" class="field" hidden><label for="display-name">Аты-жөні</label><input id="display-name" name="display_name" autocomplete="name" minlength="2" maxlength="80" placeholder="Жүйеде көрсетілетін есім"></div>
+          <div class="field"><label for="login">Логин</label><input id="login" name="login" autocomplete="username" required minlength="3" maxlength="32" pattern="[a-z][a-z0-9_.\-]{2,31}" spellcheck="false" placeholder="Логиніңізді енгізіңіз"><p class="field-hint">3–32 таңба: кіші латын әрпі, сан, нүкте, _ немесе -. Әріптен басталады.</p></div>
+          <div class="field"><label for="password">Құпиясөз</label><div class="password-field"><input id="password" name="password" type="password" autocomplete="current-password" required minlength="12" maxlength="128" placeholder="Құпиясөзді енгізіңіз"><button id="password-toggle" type="button" aria-label="Құпиясөзді көрсету" aria-pressed="false">Көрсету</button></div><p id="password-hint" class="field-hint" hidden>12–128 таңба. Басқа сервистегі құпиясөзді қайталамаңыз.</p></div>
+          <button id="auth-submit" class="button primary auth-submit" type="submit">Кіру</button>
+          <p id="registration-note" class="field-hint registration-note" hidden>Тіркелгі әкімші растағаннан кейін белсенді болады.</p>
+        </form>
+      </div></section>
+    </main>
+    <div id="app-screen" class="app-shell" hidden>
+      <button id="nav-overlay" class="nav-overlay" type="button" aria-label="Навигацияны жабу" hidden></button>
+      <aside id="sidebar" class="sidebar" aria-label="Негізгі навигация">
+        <a class="app-brand" href="#dashboard"><span class="brand-symbol" aria-hidden="true">К</span><span>Кафедра АРМ<small>Басқару кеңістігі</small></span></a>
+        <p class="nav-section-label">ЖҰМЫС КЕҢІСТІГІ</p><nav id="main-navigation"></nav>
+        <div class="sidebar-footer"><span class="sidebar-footer-mark" aria-hidden="true">◈</span><div>Кафедра жүйесі<small>Қолжетімділік және аудит</small></div></div>
+      </aside>
+      <div class="app-main">
+        <header class="topbar"><div class="topbar-left"><button id="nav-toggle" class="icon-button mobile-menu-button" type="button" aria-label="Навигацияны ашу" aria-expanded="false" aria-controls="sidebar">☰</button><span id="breadcrumb">Жұмыс кеңістігі</span></div><div class="topbar-right"><span class="timezone-label">UTC</span><details id="user-menu" class="user-menu"><summary><span id="user-avatar" class="avatar" aria-hidden="true">К</span><span class="user-menu-label"><strong id="current-user-name"></strong><small id="current-user-role"></small></span><span class="menu-caret" aria-hidden="true">⌄</span></summary><div class="user-dropdown"><p id="current-user-login"></p><button id="logout-button" type="button">Жүйеден шығу <span aria-hidden="true">↗</span></button></div></details></div></header>
+        <main id="page-content" class="page-content" tabindex="-1" aria-live="polite"></main>
+        <footer class="app-footer"><span>Кафедра әкімшісінің жұмыс орны</span><span>Журналдағы барлық уақыт UTC бойынша</span></footer>
+      </div>
+    </div>
+    <div id="toast-region" class="toast-region" aria-live="polite" aria-atomic="false"></div>
+  </body>
+</html>

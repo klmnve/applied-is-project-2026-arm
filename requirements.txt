@@ -1,0 +1,2 @@
+# Laboratory works 1-4. Runtime and developer tools are declared in pyproject.toml.
+-e .[dev]

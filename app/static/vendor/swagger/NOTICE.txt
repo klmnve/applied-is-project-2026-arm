@@ -1,0 +1,5 @@
+Swagger UI distribution 5.34.1
+Source: https://registry.npmjs.org/swagger-ui-dist/-/swagger-ui-dist-5.34.1.tgz
+Project: https://github.com/swagger-api/swagger-ui
+License: Apache-2.0; see LICENSE in this directory.
+These assets are served locally so the API reference works without an external CDN.
