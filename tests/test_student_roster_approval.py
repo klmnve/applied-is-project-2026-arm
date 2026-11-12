@@ -64,6 +64,7 @@ def roster(tmp_path, monkeypatch, roster_credentials):
             app=application,
             store=store,
             password=password,
+            password_hash=encoded,
             settings=settings,
         )
 
@@ -92,6 +93,27 @@ def register(system, login="roster_applicant", role="student", **changes):
         user_id = connection.execute(
             "SELECT user_id FROM Users WHERE login=?", (login,)
         ).fetchone()[0]
+    return SimpleNamespace(user_id=user_id, login=login)
+
+
+def legacy_student_request(system, login):
+    """Model a migrated student request created before StudentClaims existed.
+
+    Current signup requires a complete claim. A teacher signup is not a legacy
+    student request and must retain the teacher-only approval restriction.
+    """
+    with system.store.connect(write=True) as connection:
+        cursor = connection.execute(
+            "INSERT INTO Users(login,display_name,password_hash,role_code,active,created_at,"
+            "requested_role,approval_status) VALUES (?,?,?,'pending',0,?,'student','pending')",
+            (login, "Legacy student applicant", system.password_hash, iso_utc()),
+        )
+        user_id = cursor.lastrowid
+        assert user_id is not None
+        assert (
+            connection.execute("SELECT 1 FROM StudentClaims WHERE user_id=?", (user_id,)).fetchone()
+            is None
+        )
     return SimpleNamespace(user_id=user_id, login=login)
 
 
@@ -490,7 +512,7 @@ def test_new_student_requires_current_claim_explicit_match_and_fresh_revision(ro
     assert_pending(roster, applicant)
     assert approve_new(roster, applicant).status_code == 200
     assert official_students(roster)[-1]["display_name"] == "Жаңартылған Өтінім Иесі"
-    legacy = register(roster, login="legacy_no_student_claim", role="teacher")
+    legacy = legacy_student_request(roster, login="legacy_no_student_claim")
     missing_claim = approve_new(roster, legacy)
     assert (
         missing_claim.status_code == 422
@@ -500,7 +522,7 @@ def test_new_student_requires_current_claim_explicit_match_and_fresh_revision(ro
 
 
 def test_reusing_an_already_linked_student_never_moves_it_to_the_new_account(roster):
-    legacy = register(roster, login="legacy_linked_account", role="teacher")
+    legacy = legacy_student_request(roster, login="legacy_linked_account")
     assert manual_approval(roster, legacy, 1).status_code == 200
     existing = official_students(roster)[0]
     applicant = register(
