@@ -1,0 +1,20 @@
+# Allowlist: no host databases, uploads, passwords, models, Git history or caches.
+**
+!Dockerfile
+!Dockerfile.frontend
+!requirements.backend.txt
+!requirements.frontend.txt
+!.streamlit/
+!.streamlit/config.toml
+!app/
+!app/**
+**/__pycache__/
+**/*.py[cod]
+**/.env
+**/.env.*
+**/*.db
+**/*.db-*
+**/*.sqlite
+**/*.sqlite3
+**/*.pem
+**/*.key

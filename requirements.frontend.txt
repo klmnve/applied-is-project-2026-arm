@@ -1,0 +1,3 @@
+# Streamlit talks to the authenticated backend over HTTP; it does not open SQLite.
+streamlit==1.66.1
+requests>=2.32,<3

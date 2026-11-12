@@ -1,0 +1,52 @@
+# Docker Compose v2: docker compose up --build -d --wait
+# A fresh volume is empty: create the first admin with app.bootstrap interactively.
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    init: true
+    ports:
+      - "127.0.0.1:${ARM_BACKEND_PORT:-8000}:8000"
+    environment:
+      DATABASE_PATH: /workspace/data/audit.db
+      UPLOAD_DIR: /workspace/data/uploads
+      COOKIE_SECURE: "false"
+      ALLOWED_ORIGINS: "http://localhost:${ARM_BACKEND_PORT:-8000},http://127.0.0.1:${ARM_BACKEND_PORT:-8000}"
+    volumes:
+      - arm_data:/workspace/data
+    networks:
+      - arm_network
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    init: true
+    depends_on:
+      backend:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:${ARM_FRONTEND_PORT:-8501}:8501"
+    environment:
+      BACKEND_URL: http://backend:8000
+      PUBLIC_BACKEND_URL: "${PUBLIC_BACKEND_URL:-http://localhost:8000}"
+    networks:
+      - arm_network
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    restart: unless-stopped
+
+volumes:
+  arm_data:
+
+networks:
+  arm_network:
+    driver: bridge

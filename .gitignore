@@ -3,6 +3,7 @@ venv/
 .tools/
 .test-artifacts/
 .env
+.streamlit/secrets.toml
 .env.*
 !.env.example
 *.db

@@ -19,7 +19,11 @@ dependencies = [
 
 [project.optional-dependencies]
 models = ["sentence-transformers>=3.3,<6"]
-dev = ["pytest>=8,<10", "ruff>=0.9,<1", "mypy>=1.13,<2", "playwright>=1.50,<2"]
+frontend = ["streamlit==1.66.1", "requests>=2.32,<3"]
+dev = [
+  "pytest>=8,<10", "ruff>=0.9,<1", "mypy>=1.13,<2",
+  "playwright>=1.50,<2", "types-requests>=2.32,<3",
+]
 
 [tool.setuptools.packages.find]
 include = ["app*"]
@@ -50,4 +54,10 @@ cache_dir = ".tools/mypy-v2"
 [[tool.mypy.overrides]]
 module = ["sentence_transformers", "sentence_transformers.*"]
 follow_imports = "skip"
+
+[[tool.mypy.overrides]]
+# Streamlit imports NumPy stubs with Python 3.12 syntax; project code supports 3.11.
+module = ["numpy", "numpy.*"]
+follow_imports = "skip"
+follow_imports_for_stubs = true
 

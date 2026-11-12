@@ -1,2 +1,3 @@
-# Laboratory works 1-4. Runtime and developer tools are declared in pyproject.toml.
--e .[dev]
+# Complete laboratory environment: FastAPI, SQLModel, Streamlit, requests and tests.
+# Docker images use requirements.backend.txt / requirements.frontend.txt instead.
+-e .[dev,frontend]
