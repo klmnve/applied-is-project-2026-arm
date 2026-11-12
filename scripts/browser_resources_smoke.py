@@ -199,7 +199,7 @@ def main() -> None:
                         stdout=log,
                         stderr=log,
                         text=True,
-                        creationflags=subprocess.CREATE_NO_WINDOW if sys.platform == "win32" else 0,
+                        creationflags=int(getattr(subprocess, "CREATE_NO_WINDOW", 0)),
                     )
                     processes.append(process)
                 wait_ready(backend + "/api/health", processes[0])
