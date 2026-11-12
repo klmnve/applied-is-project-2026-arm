@@ -314,7 +314,9 @@ if not categories or not rooms:
     st.stop()
 
 st.subheader("Жабдықтарды басқару")
-add_tab, edit_tab, delete_tab = st.tabs(["Қосу", "Өзгерту", "Жою"])
+add_tab, edit_tab, delete_tab = st.tabs(
+    ["Қосу", "Өзгерту", "Жою"], key="management_tab", on_change="rerun"
+)
 with add_tab:
     with st.form("add_resource", clear_on_submit=True):
         payload = resource_fields("add", categories, rooms)

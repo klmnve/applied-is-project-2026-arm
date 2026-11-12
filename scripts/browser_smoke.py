@@ -670,7 +670,7 @@ def main() -> None:
                 env=environment,
                 stdout=output,
                 stderr=subprocess.STDOUT,
-                creationflags=subprocess.CREATE_NO_WINDOW if os.name == "nt" else 0,
+                creationflags=subprocess.CREATE_NO_WINDOW if sys.platform == "win32" else 0,
             )
             try:
                 deadline = time.monotonic() + 45

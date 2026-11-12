@@ -263,3 +263,13 @@ def test_ui_refresh_discards_stale_editor_snapshot(backend):
     at.button(key="refresh").click().run()
     assert not at.exception
     assert at.text_input(key="edit_1_name").value == "Жаңартылған проектор"
+
+
+def test_ui_delete_tab_stays_selected_after_confirmation_rerun(backend):
+    at = login(app())
+    at.session_state["management_tab"] = "Жою"
+    at.run()
+    at.checkbox(key="delete_confirm_1").check().run()
+    assert not at.exception
+    assert at.session_state["management_tab"] == "Жою"
+    assert not at.button(key="delete_button_1").disabled

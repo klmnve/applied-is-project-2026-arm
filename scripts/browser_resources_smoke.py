@@ -98,6 +98,10 @@ def run_browser(
         expect(delete.get_by_role("button", name="Жабдықты жою", exact=True)).to_be_disabled()
         delete.get_by_text("Осы жабдықты жоюды растаймын", exact=True).click()
         expect(delete.get_by_role("checkbox")).to_be_checked()
+        expect(page.get_by_role("tab", name="Жою", exact=True)).to_have_attribute(
+            "aria-selected", "true"
+        )
+        expect(delete.get_by_role("button", name="Жабдықты жою", exact=True)).to_be_enabled()
         delete.get_by_role("button", name="Жабдықты жою", exact=True).click()
         expect(page.get_by_text("Жабдық жойылды. Тізім жаңартылды.", exact=True)).to_be_visible()
         expect(page.get_by_text("Табылды: 0 · Бет: 1 / 1", exact=True)).to_be_visible()
@@ -195,7 +199,7 @@ def main() -> None:
                         stdout=log,
                         stderr=log,
                         text=True,
-                        creationflags=subprocess.CREATE_NO_WINDOW if os.name == "nt" else 0,
+                        creationflags=subprocess.CREATE_NO_WINDOW if sys.platform == "win32" else 0,
                     )
                     processes.append(process)
                 wait_ready(backend + "/api/health", processes[0])
@@ -206,7 +210,8 @@ def main() -> None:
                         headless=True, executable_path=str(chrome) if chrome.exists() else None
                     )
                     try:
-                        page = browser.new_page(viewport={"width": 1440, "height": 1000})
+                        context = browser.new_context(viewport={"width": 1440, "height": 1000})
+                        page = context.new_page()
                         errors: list[str] = []
                         page.on("pageerror", lambda error: errors.append(str(error)))
                         result = run_browser(page, frontend, backend, password, output)
