@@ -1,0 +1,53 @@
+{
+  "verified_at": "2026-11-12",
+  "commit": "89488350d37088f245b17d5d02abe1512729ae94",
+  "workflow": "https://github.com/klmnve/applied-is-project-2026-arm/actions/runs/43167035722",
+  "status": "success",
+  "environment": "GitHub Actions ubuntu-latest; pytest on Python 3.12; containers based on python:3.11-slim",
+  "pytest": {
+    "tests": 609,
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0,
+    "seconds": 173.169,
+    "streamlit_client_tests_included": 11
+  },
+  "code_quality": {
+    "ruff": "passed",
+    "ruff_format": "passed",
+    "mypy": "passed"
+  },
+  "real_browser": {
+    "login": true,
+    "create": true,
+    "search": true,
+    "patch": true,
+    "delete": true,
+    "logout": true,
+    "mobile_no_page_overflow": true,
+    "real_http_backend": true,
+    "page_errors": [],
+    "status": "passed"
+  },
+  "docker": {
+    "status": "passed",
+    "checked_at_utc": "2026-11-12T06:18:13.379755+00:00",
+    "checks": [
+      "both Compose services start healthy",
+      "nonroot containers and internal service DNS",
+      "real HTTP login, CSRF, CRUD, search, validation and frontend health",
+      "SQLite, upload files and deleted seed state persist across down and up"
+    ],
+    "uses_working_project_database": false
+  },
+  "local_windows": {
+    "browser": "passed",
+    "streamlit_client_tests": "11 passed",
+    "docker_available": false
+  },
+  "artifacts": [
+    "tests-and-browser",
+    "docker-verification"
+  ],
+  "artifact_retention_days": 14
+}
