@@ -111,7 +111,25 @@ def create_app(
                         }
                     },
                 )
-        response = await call_next(request)
+        try:
+            response = await call_next(request)
+        except Exception as exc:
+            # Handle the request failure before Starlette can re-raise it to Uvicorn.
+            # Exception messages can contain SQL values or other private data.
+            logger.error("Request failed: %s", type(exc).__name__)
+            response = JSONResponse(
+                status_code=500,
+                content={
+                    "error": {
+                        "code": "server_error",
+                        "message": error_message(
+                            "server_error",
+                            "Сервер сұрауды өңдей алмады. Сервер күйін тексеріп, қайталаңыз.",
+                            request_locale(request),
+                        ),
+                    }
+                },
+            )
         response.headers["Content-Security-Policy"] = (
             "default-src 'self'; script-src 'self'; style-src 'self'; "
             "img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'"
@@ -148,24 +166,6 @@ def create_app(
                         "invalid_request",
                         "Енгізілген деректер жарамсыз. "
                         "Өрістердің пішімі мен рұқсат етілген мәндерін тексеріңіз.",
-                        request_locale(request),
-                    ),
-                }
-            },
-        )
-
-    @application.exception_handler(Exception)
-    async def server_error(request: Request, exc: Exception) -> JSONResponse:
-        # Avoid logging the question, journal reason, model output or sensitive internals.
-        logger.error("Audit request failed: %s", type(exc).__name__)
-        return JSONResponse(
-            status_code=500,
-            content={
-                "error": {
-                    "code": "server_error",
-                    "message": error_message(
-                        "server_error",
-                        "Сервер сұрауды өңдей алмады. Сервер күйін тексеріп, қайталаңыз.",
                         request_locale(request),
                     ),
                 }

@@ -1,0 +1,4 @@
+# Isolated Lab 8 measurement environment; keep outside the runtime image.
+locust==2.47.0
+psutil>=6,<8
+matplotlib>=3.9,<4
