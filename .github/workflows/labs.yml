@@ -11,6 +11,33 @@ permissions:
   contents: read
 
 jobs:
+  lab8:
+    name: Lab 8 integration and security
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: pyproject.toml
+      - run: python -m pip install -r requirements.txt bandit==1.9.4
+      - name: Check HTTP, database and access controls
+        run: python -m pytest -vv tests/test_lab8_integration.py --junitxml=artifacts/lab8/integration-tests.xml
+      - name: Record Bandit findings and check high severity
+        run: |
+          python -m bandit -r app -f json -o artifacts/lab8/bandit.json --exit-zero
+          python -m bandit -r app -lll
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: lab8-verification
+          path: artifacts/lab8/
+          retention-days: 14
+
   tests:
     runs-on: ubuntu-latest
     timeout-minutes: 40
