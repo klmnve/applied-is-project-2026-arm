@@ -85,9 +85,42 @@ def authenticated_sessions(host: str, password: str) -> list[dict[str, str]]:
     return sessions
 
 
+def actual_process(pid: int, marker: str) -> Any:
+    """Windows venv python.exe may be a waiting launcher, not the interpreter."""
+    root = psutil.Process(pid)
+    for _ in range(20):
+        matches = [
+            process
+            for process in root.children(recursive=True)
+            if marker in " ".join(process.cmdline())
+        ]
+        if matches:
+            return matches[-1]
+        if os.name != "nt":
+            return root
+        time.sleep(0.1)
+    return root
+
+
+def terminate_tree(process: subprocess.Popen[str]) -> None:
+    try:
+        children = psutil.Process(process.pid).children(recursive=True)
+    except psutil.NoSuchProcess:
+        children = []
+    for child in reversed(children):
+        try:
+            child.terminate()
+        except psutil.NoSuchProcess:
+            pass
+    process.terminate()
+    process.wait(timeout=15)
+    psutil.wait_procs(children, timeout=15)
+
+
 def run_scenario(users: int, seconds: int, context_file: Path, server_pid: int) -> dict[str, Any]:
     prefix = OUTPUT / f"load-{users:03}"
-    result_path = prefix.with_suffix(".json")
+    # A fresh temporary result cannot be confused with an earlier published run.
+    result_path = context_file.parent / f"result-{users}.json"
     environment = os.environ.copy()
     environment.update(
         {
@@ -118,14 +151,16 @@ def run_scenario(users: int, seconds: int, context_file: Path, server_pid: int) 
         "--loglevel",
         "WARNING",
     ]
-    server = psutil.Process(server_pid)
+    server = actual_process(server_pid, "lab8_load_server.py")
     samples: list[dict[str, Any]] = []
     server.cpu_percent(None)
     psutil.cpu_percent(None)
     print(f"Starting {users} users for {seconds} seconds", flush=True)
     with prefix.with_suffix(".log").open("w", encoding="utf-8") as log:
-        worker = subprocess.Popen(command, cwd=ROOT, env=environment, stdout=log, stderr=log)
-        generator = psutil.Process(worker.pid)
+        worker = subprocess.Popen(
+            command, cwd=ROOT, env=environment, stdout=log, stderr=log, text=True
+        )
+        generator = actual_process(worker.pid, "locust")
         generator.cpu_percent(None)
         started = time.monotonic()
         while worker.poll() is None:
@@ -145,8 +180,7 @@ def run_scenario(users: int, seconds: int, context_file: Path, server_pid: int) 
             except psutil.NoSuchProcess:
                 break
             if time.monotonic() - started > seconds + 60:
-                worker.terminate()
-                worker.wait(timeout=10)
+                terminate_tree(worker)
                 raise RuntimeError("Locust exceeded its bounded run time")
         exit_code = worker.wait(timeout=10)
     if not result_path.exists():
@@ -175,7 +209,7 @@ def run_scenario(users: int, seconds: int, context_file: Path, server_pid: int) 
             "resource_samples": len(samples),
         }
     )
-    save_json(result_path, result)
+    save_json(prefix.with_suffix(".json"), result)
     print(
         f"Completed {users}: {result['requests']} requests, {result['failures']} errors, "
         f"mean {result['mean_ms']:.1f} ms, p95 {result['p95_ms']:.1f} ms",
@@ -277,8 +311,7 @@ def main() -> None:
                         },
                     )
             finally:
-                server.terminate()
-                server.wait(timeout=15)
+                terminate_tree(server)
     csv_rows(
         OUTPUT / "load-summary.csv",
         [
