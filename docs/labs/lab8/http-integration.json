@@ -1,0 +1,1055 @@
+{
+  "generated_at_utc": "2026-11-19T05:16:47.274548+00:00",
+  "transport": "requests over actual loopback TCP to uvicorn",
+  "database": "isolated temporary SQLite with synthetic accounts",
+  "note": "Malformed input is 422 under this API contract; resources use PATCH.",
+  "http_observations": 42,
+  "observations": [
+    {
+      "case": "admin_authentication",
+      "kind": "real_socket_http",
+      "method": "POST",
+      "path": "/api/auth/login",
+      "expected_status": 200,
+      "observed_status": 200,
+      "status_matches": true,
+      "response": {
+        "user": {
+          "user_id": 1,
+          "login": "lab8_admin",
+          "display_name": "Синтетикалық зертхана әкімшісі",
+          "role_code": "admin",
+          "role_label": "Әкімші",
+          "active": true,
+          "permissions": [
+            "Audit.View",
+            "Dashboard.View",
+            "Documents.Delete",
+            "Documents.Upload",
+            "Documents.View",
+            "Grades.Edit",
+            "Grades.View",
+            "Learning.Manage",
+            "Learning.View",
+            "Roles.Manage",
+            "Sessions.Manage",
+            "Users.Manage"
+          ],
+          "requested_role": null,
+          "approval_status": "approved",
+          "approval_reason": "",
+          "request_review_status": "approved",
+          "student_id": null,
+          "created_at": "2026-11-19T05:16:33.358702Z",
+          "approved_at": null,
+          "student_claim": null
+        },
+        "csrf_token": "[REDACTED]"
+      }
+    },
+    {
+      "case": "list_resources",
+      "kind": "real_socket_http",
+      "method": "GET",
+      "path": "/api/resources",
+      "expected_status": 200,
+      "observed_status": 200,
+      "status_matches": true,
+      "response": {
+        "items": [
+          {
+            "name": "Оқу компьютері",
+            "inventory_code": "DEMO-PC-001",
+            "category_id": 1,
+            "room_id": 1,
+            "quantity": 12,
+            "unit_cost": 280000.0,
+            "id": 1,
+            "category_name": "Компьютерлік техника",
+            "room_name": "Зертхана 201"
+          },
+          {
+            "name": "Мультимедиа проекторы",
+            "inventory_code": "DEMO-PRJ-001",
+            "category_id": 2,
+            "room_id": 2,
+            "quantity": 1,
+            "unit_cost": 190000.0,
+            "id": 2,
+            "category_name": "Көрсету жабдықтары",
+            "room_name": "Дәрісхана 202"
+          },
+          {
+            "name": "Лазерлік принтер",
+            "inventory_code": "DEMO-PRN-001",
+            "category_id": 3,
+            "room_id": 3,
+            "quantity": 2,
+            "unit_cost": 85000.0,
+            "id": 3,
+            "category_name": "Кеңсе техникасы",
+            "room_name": "Кафедра 203"
+          },
+          {
+            "name": "Оқытушы ноутбугі",
+            "inventory_code": "DEMO-NB-001",
+            "category_id": 1,
+            "room_id": 3,
+            "quantity": 1,
+            "unit_cost": 350000.0,
+            "id": 4,
+            "category_name": "Компьютерлік техника",
+            "room_name": "Кафедра 203"
+          }
+        ],
+        "total": 4,
+        "page": 1,
+        "page_size": 25,
+        "pages": 1
+      }
+    },
+    {
+      "case": "list_categories",
+      "kind": "real_socket_http",
+      "method": "GET",
+      "path": "/api/resource-categories",
+      "expected_status": 200,
+      "observed_status": 200,
+      "status_matches": true,
+      "response": {
+        "items": [
+          {
+            "id": 1,
+            "name": "Компьютерлік техника"
+          },
+          {
+            "id": 2,
+            "name": "Көрсету жабдықтары"
+          },
+          {
+            "id": 3,
+            "name": "Кеңсе техникасы"
+          }
+        ]
+      }
+    },
+    {
+      "case": "list_rooms",
+      "kind": "real_socket_http",
+      "method": "GET",
+      "path": "/api/resource-rooms",
+      "expected_status": 200,
+      "observed_status": 200,
+      "status_matches": true,
+      "response": {
+        "items": [
+          {
+            "id": 1,
+            "name": "Зертхана 201"
+          },
+          {
+            "id": 2,
+            "name": "Дәрісхана 202"
+          },
+          {
+            "id": 3,
+            "name": "Кафедра 203"
+          }
+        ]
+      }
+    },
+    {
+      "case": "create_LAB8-CREATE",
+      "kind": "real_socket_http",
+      "method": "POST",
+      "path": "/api/resources",
+      "expected_status": 201,
+      "observed_status": 201,
+      "status_matches": true,
+      "response": {
+        "item": {
+          "name": "Зертхана сынағының жабдығы",
+          "inventory_code": "LAB8-CREATE",
+          "category_id": 1,
+          "room_id": 1,
+          "quantity": 2,
+          "unit_cost": 75000.0,
+          "id": 5,
+          "category_name": "Компьютерлік техника",
+          "room_name": "Зертхана 201"
+        }
+      }
+    },
+    {
+      "case": "create_LAB8-PATCH",
+      "kind": "real_socket_http",
+      "method": "POST",
+      "path": "/api/resources",
+      "expected_status": 201,
+      "observed_status": 201,
+      "status_matches": true,
+      "response": {
+        "item": {
+          "name": "Зертхана сынағының жабдығы",
+          "inventory_code": "LAB8-PATCH",
+          "category_id": 1,
+          "room_id": 1,
+          "quantity": 2,
+          "unit_cost": 75000.0,
+          "id": 6,
+          "category_name": "Компьютерлік техника",
+          "room_name": "Зертхана 201"
+        }
+      }
+    },
+    {
+      "case": "patch_quantity_to_zero",
+      "kind": "real_socket_http",
+      "method": "PATCH",
+      "path": "/api/resources/6",
+      "expected_status": 200,
+      "observed_status": 200,
+      "status_matches": true,
+      "response": {
+        "item": {
+          "name": "Зертхана сынағының жабдығы",
+          "inventory_code": "LAB8-PATCH",
+          "category_id": 1,
+          "room_id": 1,
+          "quantity": 0,
+          "unit_cost": 0.0,
+          "id": 6,
+          "category_name": "Компьютерлік техника",
+          "room_name": "Зертхана 201"
+        }
+      }
+    },
+    {
+      "case": "read_after_patch",
+      "kind": "real_socket_http",
+      "method": "GET",
+      "path": "/api/resources/6",
+      "expected_status": 200,
+      "observed_status": 200,
+      "status_matches": true,
+      "response": {
+        "item": {
+          "name": "Зертхана сынағының жабдығы",
+          "inventory_code": "LAB8-PATCH",
+          "category_id": 1,
+          "room_id": 1,
+          "quantity": 0,
+          "unit_cost": 0.0,
+          "id": 6,
+          "category_name": "Компьютерлік техника",
+          "room_name": "Зертхана 201"
+        }
+      }
+    },
+    {
+      "case": "create_LAB8-DELETE",
+      "kind": "real_socket_http",
+      "method": "POST",
+      "path": "/api/resources",
+      "expected_status": 201,
+      "observed_status": 201,
+      "status_matches": true,
+      "response": {
+        "item": {
+          "name": "Зертхана сынағының жабдығы",
+          "inventory_code": "LAB8-DELETE",
+          "category_id": 1,
+          "room_id": 1,
+          "quantity": 2,
+          "unit_cost": 75000.0,
+          "id": 7,
+          "category_name": "Компьютерлік техника",
+          "room_name": "Зертхана 201"
+        }
+      }
+    },
+    {
+      "case": "delete_resource",
+      "kind": "real_socket_http",
+      "method": "DELETE",
+      "path": "/api/resources/7",
+      "expected_status": 204,
+      "observed_status": 204,
+      "status_matches": true,
+      "response": null
+    },
+    {
+      "case": "read_deleted_resource",
+      "kind": "real_socket_http",
+      "method": "GET",
+      "path": "/api/resources/7",
+      "expected_status": 404,
+      "observed_status": 404,
+      "status_matches": true,
+      "response": {
+        "error": {
+          "code": "not_found",
+          "message": "Жабдық табылмады."
+        }
+      }
+    },
+    {
+      "case": "patch_deleted_resource",
+      "kind": "real_socket_http",
+      "method": "PATCH",
+      "path": "/api/resources/7",
+      "expected_status": 404,
+      "observed_status": 404,
+      "status_matches": true,
+      "response": {
+        "error": {
+          "code": "not_found",
+          "message": "Жабдық табылмады."
+        }
+      }
+    },
+    {
+      "case": "create_LAB8-FILTER",
+      "kind": "real_socket_http",
+      "method": "POST",
+      "path": "/api/resources",
+      "expected_status": 201,
+      "observed_status": 201,
+      "status_matches": true,
+      "response": {
+        "item": {
+          "name": "Зертхана сынағының жабдығы",
+          "inventory_code": "LAB8-FILTER",
+          "category_id": 1,
+          "room_id": 1,
+          "quantity": 2,
+          "unit_cost": 150.0,
+          "id": 7,
+          "category_name": "Компьютерлік техника",
+          "room_name": "Зертхана 201"
+        }
+      }
+    },
+    {
+      "case": "combined_resource_filters",
+      "kind": "real_socket_http",
+      "method": "GET",
+      "path": "/api/resources",
+      "expected_status": 200,
+      "observed_status": 200,
+      "status_matches": true,
+      "response": {
+        "items": [
+          {
+            "name": "Зертхана сынағының жабдығы",
+            "inventory_code": "LAB8-FILTER",
+            "category_id": 1,
+            "room_id": 1,
+            "quantity": 2,
+            "unit_cost": 150.0,
+            "id": 7,
+            "category_name": "Компьютерлік техника",
+            "room_name": "Зертхана 201"
+          }
+        ],
+        "total": 1,
+        "page": 1,
+        "page_size": 1,
+        "pages": 1
+      }
+    },
+    {
+      "case": "missing_resource_id",
+      "kind": "real_socket_http",
+      "method": "GET",
+      "path": "/api/resources/9000000000",
+      "expected_status": 404,
+      "observed_status": 404,
+      "status_matches": true,
+      "response": {
+        "error": {
+          "code": "not_found",
+          "message": "Жабдық табылмады."
+        }
+      }
+    },
+    {
+      "case": "missing_user_id",
+      "kind": "real_socket_http",
+      "method": "GET",
+      "path": "/api/admin/teachers/9000000000",
+      "expected_status": 404,
+      "observed_status": 404,
+      "status_matches": true,
+      "response": {
+        "error": {
+          "code": "teacher_not_found",
+          "message": "Оқытушы немесе оның өтінімі табылмады."
+        }
+      }
+    },
+    {
+      "case": "read_role_permissions",
+      "kind": "real_socket_http",
+      "method": "GET",
+      "path": "/api/admin/roles",
+      "expected_status": 200,
+      "observed_status": 200,
+      "status_matches": true,
+      "response": {
+        "roles": [
+          {
+            "code": "admin",
+            "label": "Әкімші",
+            "permissions": [
+              "Audit.View",
+              "Dashboard.View",
+              "Documents.Delete",
+              "Documents.Upload",
+              "Documents.View",
+              "Grades.Edit",
+              "Grades.View",
+              "Learning.Manage",
+              "Learning.View",
+              "Roles.Manage",
+              "Sessions.Manage",
+              "Users.Manage"
+            ]
+          },
+          {
+            "code": "auditor",
+            "label": "Аудитор",
+            "permissions": [
+              "Audit.View",
+              "Dashboard.View"
+            ]
+          },
+          {
+            "code": "head",
+            "label": "Кафедра меңгерушісі",
+            "permissions": [
+              "Audit.View",
+              "Dashboard.View",
+              "Documents.View",
+              "Grades.View",
+              "Learning.View"
+            ]
+          },
+          {
+            "code": "pending",
+            "label": "Күтілуде",
+            "permissions": [
+              "Dashboard.View"
+            ]
+          },
+          {
+            "code": "student",
+            "label": "Студент",
+            "permissions": [
+              "Dashboard.View",
+              "Learning.Submit",
+              "Learning.View"
+            ]
+          },
+          {
+            "code": "teacher",
+            "label": "Оқытушы",
+            "permissions": [
+              "Dashboard.View",
+              "Documents.Upload",
+              "Documents.View",
+              "Grades.Edit",
+              "Grades.View",
+              "Learning.Manage",
+              "Learning.View"
+            ]
+          }
+        ],
+        "permissions": [
+          {
+            "code": "Audit.View",
+            "label": "Аудит журналын қарау"
+          },
+          {
+            "code": "Dashboard.View",
+            "label": "Басқару панелін қарау"
+          },
+          {
+            "code": "Documents.Delete",
+            "label": "Құжатты жою"
+          },
+          {
+            "code": "Documents.Upload",
+            "label": "Құжат жүктеу"
+          },
+          {
+            "code": "Documents.View",
+            "label": "Құжаттарды қарау"
+          },
+          {
+            "code": "Grades.Edit",
+            "label": "Бекітілген бағаларды өзгерту"
+          },
+          {
+            "code": "Grades.View",
+            "label": "Ведомостарды қарау"
+          },
+          {
+            "code": "Learning.Manage",
+            "label": "Тапсырмалар мен жұмыстарды бағалау"
+          },
+          {
+            "code": "Learning.Submit",
+            "label": "Өз оқу жұмысын тапсыру"
+          },
+          {
+            "code": "Learning.View",
+            "label": "Тапсырмалар мен оқу жұмыстарын қарау"
+          },
+          {
+            "code": "Roles.Manage",
+            "label": "Рөлдер мен құқықтарды басқару"
+          },
+          {
+            "code": "Sessions.Manage",
+            "label": "Сессияларды басқару"
+          },
+          {
+            "code": "Users.Manage",
+            "label": "Пайдаланушыларды басқару"
+          }
+        ]
+      }
+    },
+    {
+      "case": "put_changed_auditor_permissions",
+      "kind": "real_socket_http",
+      "method": "PUT",
+      "path": "/api/admin/roles/auditor/permissions",
+      "expected_status": 200,
+      "observed_status": 200,
+      "status_matches": true,
+      "response": {
+        "role_code": "auditor",
+        "permissions": [
+          "Audit.View",
+          "Dashboard.View",
+          "Documents.View"
+        ]
+      }
+    },
+    {
+      "case": "restore_auditor_permissions",
+      "kind": "real_socket_http",
+      "method": "PUT",
+      "path": "/api/admin/roles/auditor/permissions",
+      "expected_status": 200,
+      "observed_status": 200,
+      "status_matches": true,
+      "response": {
+        "role_code": "auditor",
+        "permissions": [
+          "Audit.View",
+          "Dashboard.View"
+        ]
+      }
+    },
+    {
+      "case": "empty_body",
+      "kind": "real_socket_http",
+      "method": "POST",
+      "path": "/api/resources",
+      "expected_status": 422,
+      "observed_status": 422,
+      "status_matches": true,
+      "response": {
+        "error": {
+          "code": "invalid_request",
+          "message": "Енгізілген деректер жарамсыз. Өрістердің пішімі мен рұқсат етілген мәндерін тексеріңіз."
+        }
+      }
+    },
+    {
+      "case": "negative_quantity",
+      "kind": "real_socket_http",
+      "method": "POST",
+      "path": "/api/resources",
+      "expected_status": 422,
+      "observed_status": 422,
+      "status_matches": true,
+      "response": {
+        "error": {
+          "code": "invalid_request",
+          "message": "Енгізілген деректер жарамсыз. Өрістердің пішімі мен рұқсат етілген мәндерін тексеріңіз."
+        }
+      }
+    },
+    {
+      "case": "null_name",
+      "kind": "real_socket_http",
+      "method": "POST",
+      "path": "/api/resources",
+      "expected_status": 422,
+      "observed_status": 422,
+      "status_matches": true,
+      "response": {
+        "error": {
+          "code": "invalid_request",
+          "message": "Енгізілген деректер жарамсыз. Өрістердің пішімі мен рұқсат етілген мәндерін тексеріңіз."
+        }
+      }
+    },
+    {
+      "case": "boolean_quantity",
+      "kind": "real_socket_http",
+      "method": "POST",
+      "path": "/api/resources",
+      "expected_status": 422,
+      "observed_status": 422,
+      "status_matches": true,
+      "response": {
+        "error": {
+          "code": "invalid_request",
+          "message": "Енгізілген деректер жарамсыз. Өрістердің пішімі мен рұқсат етілген мәндерін тексеріңіз."
+        }
+      }
+    },
+    {
+      "case": "forged_system_id",
+      "kind": "real_socket_http",
+      "method": "POST",
+      "path": "/api/resources",
+      "expected_status": 422,
+      "observed_status": 422,
+      "status_matches": true,
+      "response": {
+        "error": {
+          "code": "invalid_request",
+          "message": "Енгізілген деректер жарамсыз. Өрістердің пішімі мен рұқсат етілген мәндерін тексеріңіз."
+        }
+      }
+    },
+    {
+      "case": "malformed_json",
+      "kind": "real_socket_http",
+      "method": "POST",
+      "path": "/api/resources",
+      "expected_status": 422,
+      "observed_status": 422,
+      "status_matches": true,
+      "response": {
+        "error": {
+          "code": "invalid_request",
+          "message": "Енгізілген деректер жарамсыз. Өрістердің пішімі мен рұқсат етілген мәндерін тексеріңіз."
+        }
+      }
+    },
+    {
+      "case": "empty_password",
+      "kind": "real_socket_http",
+      "method": "POST",
+      "path": "/api/auth/login",
+      "expected_status": 422,
+      "observed_status": 422,
+      "status_matches": true,
+      "response": {
+        "error": {
+          "code": "invalid_request",
+          "message": "Енгізілген деректер жарамсыз. Өрістердің пішімі мен рұқсат етілген мәндерін тексеріңіз."
+        }
+      }
+    },
+    {
+      "case": "weak_short_password",
+      "kind": "real_socket_http",
+      "method": "POST",
+      "path": "/api/auth/register",
+      "expected_status": 422,
+      "observed_status": 422,
+      "status_matches": true,
+      "response": {
+        "error": {
+          "code": "invalid_request",
+          "message": "Енгізілген деректер жарамсыз. Өрістердің пішімі мен рұқсат етілген мәндерін тексеріңіз."
+        }
+      }
+    },
+    {
+      "case": "unknown_login",
+      "kind": "real_socket_http",
+      "method": "POST",
+      "path": "/api/auth/login",
+      "expected_status": 401,
+      "observed_status": 401,
+      "status_matches": true,
+      "response": {
+        "error": {
+          "code": "invalid_credentials",
+          "message": "Логин немесе құпиясөз қате, не аккаунт белсенді емес."
+        }
+      }
+    },
+    {
+      "case": "wrong_password",
+      "kind": "real_socket_http",
+      "method": "POST",
+      "path": "/api/auth/login",
+      "expected_status": 401,
+      "observed_status": 401,
+      "status_matches": true,
+      "response": {
+        "error": {
+          "code": "invalid_credentials",
+          "message": "Логин немесе құпиясөз қате, не аккаунт белсенді емес."
+        }
+      }
+    },
+    {
+      "case": "anonymous_resources",
+      "kind": "real_socket_http",
+      "method": "GET",
+      "path": "/api/resources",
+      "expected_status": 401,
+      "observed_status": 401,
+      "status_matches": true,
+      "response": {
+        "error": {
+          "code": "unauthenticated",
+          "message": "Жүйеге кіріңіз."
+        }
+      }
+    },
+    {
+      "case": "teacher_authentication",
+      "kind": "real_socket_http",
+      "method": "POST",
+      "path": "/api/auth/login",
+      "expected_status": 200,
+      "observed_status": 200,
+      "status_matches": true,
+      "response": {
+        "user": {
+          "user_id": 2,
+          "login": "lab8_teacher",
+          "display_name": "Синтетикалық оқытушы",
+          "role_code": "teacher",
+          "role_label": "Оқытушы",
+          "active": true,
+          "permissions": [
+            "Dashboard.View",
+            "Documents.Upload",
+            "Documents.View",
+            "Grades.Edit",
+            "Grades.View",
+            "Learning.Manage",
+            "Learning.View"
+          ],
+          "requested_role": null,
+          "approval_status": "approved",
+          "approval_reason": "",
+          "request_review_status": "approved",
+          "student_id": null,
+          "created_at": "2026-11-19T05:16:35.013439Z",
+          "approved_at": null,
+          "student_claim": null
+        },
+        "csrf_token": "[REDACTED]"
+      }
+    },
+    {
+      "case": "teacher_read_resources",
+      "kind": "real_socket_http",
+      "method": "GET",
+      "path": "/api/resources",
+      "expected_status": 200,
+      "observed_status": 200,
+      "status_matches": true,
+      "response": {
+        "items": [
+          {
+            "name": "Оқу компьютері",
+            "inventory_code": "DEMO-PC-001",
+            "category_id": 1,
+            "room_id": 1,
+            "quantity": 12,
+            "unit_cost": 280000.0,
+            "id": 1,
+            "category_name": "Компьютерлік техника",
+            "room_name": "Зертхана 201"
+          },
+          {
+            "name": "Мультимедиа проекторы",
+            "inventory_code": "DEMO-PRJ-001",
+            "category_id": 2,
+            "room_id": 2,
+            "quantity": 1,
+            "unit_cost": 190000.0,
+            "id": 2,
+            "category_name": "Көрсету жабдықтары",
+            "room_name": "Дәрісхана 202"
+          },
+          {
+            "name": "Лазерлік принтер",
+            "inventory_code": "DEMO-PRN-001",
+            "category_id": 3,
+            "room_id": 3,
+            "quantity": 2,
+            "unit_cost": 85000.0,
+            "id": 3,
+            "category_name": "Кеңсе техникасы",
+            "room_name": "Кафедра 203"
+          },
+          {
+            "name": "Оқытушы ноутбугі",
+            "inventory_code": "DEMO-NB-001",
+            "category_id": 1,
+            "room_id": 3,
+            "quantity": 1,
+            "unit_cost": 350000.0,
+            "id": 4,
+            "category_name": "Компьютерлік техника",
+            "room_name": "Кафедра 203"
+          },
+          {
+            "name": "Зертхана сынағының жабдығы",
+            "inventory_code": "LAB8-CREATE",
+            "category_id": 1,
+            "room_id": 1,
+            "quantity": 2,
+            "unit_cost": 75000.0,
+            "id": 5,
+            "category_name": "Компьютерлік техника",
+            "room_name": "Зертхана 201"
+          },
+          {
+            "name": "Зертхана сынағының жабдығы",
+            "inventory_code": "LAB8-PATCH",
+            "category_id": 1,
+            "room_id": 1,
+            "quantity": 0,
+            "unit_cost": 0.0,
+            "id": 6,
+            "category_name": "Компьютерлік техника",
+            "room_name": "Зертхана 201"
+          },
+          {
+            "name": "Зертхана сынағының жабдығы",
+            "inventory_code": "LAB8-FILTER",
+            "category_id": 1,
+            "room_id": 1,
+            "quantity": 2,
+            "unit_cost": 150.0,
+            "id": 7,
+            "category_name": "Компьютерлік техника",
+            "room_name": "Зертхана 201"
+          }
+        ],
+        "total": 7,
+        "page": 1,
+        "page_size": 25,
+        "pages": 1
+      }
+    },
+    {
+      "case": "teacher_admin_write_denied",
+      "kind": "real_socket_http",
+      "method": "POST",
+      "path": "/api/resources",
+      "expected_status": 403,
+      "observed_status": 403,
+      "status_matches": true,
+      "response": {
+        "error": {
+          "code": "forbidden",
+          "message": "Бұл әрекетке рұқсатыңыз жоқ."
+        }
+      }
+    },
+    {
+      "case": "missing_csrf_header",
+      "kind": "real_socket_http",
+      "method": "POST",
+      "path": "/api/resources",
+      "expected_status": 403,
+      "observed_status": 403,
+      "status_matches": true,
+      "response": {
+        "error": {
+          "code": "csrf_failed",
+          "message": "Қауіпсіздік тексеруі өтпеді. Бетті жаңартыңыз."
+        }
+      }
+    },
+    {
+      "case": "create_LAB8-DUPLICATE",
+      "kind": "real_socket_http",
+      "method": "POST",
+      "path": "/api/resources",
+      "expected_status": 201,
+      "observed_status": 201,
+      "status_matches": true,
+      "response": {
+        "item": {
+          "name": "Зертхана сынағының жабдығы",
+          "inventory_code": "LAB8-DUPLICATE",
+          "category_id": 1,
+          "room_id": 1,
+          "quantity": 2,
+          "unit_cost": 75000.0,
+          "id": 8,
+          "category_name": "Компьютерлік техника",
+          "room_name": "Зертхана 201"
+        }
+      }
+    },
+    {
+      "case": "unique_inventory_conflict",
+      "kind": "real_socket_http",
+      "method": "POST",
+      "path": "/api/resources",
+      "expected_status": 409,
+      "observed_status": 409,
+      "status_matches": true,
+      "response": {
+        "error": {
+          "code": "resource_conflict",
+          "message": "Бұл түгендеу коды қолданылған."
+        }
+      }
+    },
+    {
+      "case": "required_field_transaction_rollback",
+      "kind": "database",
+      "rollback_confirmed": true,
+      "rows_unchanged": true,
+      "integrity_check": "ok",
+      "foreign_key_violations": 0
+    },
+    {
+      "case": "audit_write_fault",
+      "kind": "real_socket_http",
+      "method": "POST",
+      "path": "/api/resources",
+      "expected_status": 500,
+      "observed_status": 500,
+      "status_matches": true,
+      "response": {
+        "error": {
+          "code": "server_error",
+          "message": "Сервер сұрауды өңдей алмады. Сервер күйін тексеріп, қайталаңыз."
+        }
+      }
+    },
+    {
+      "case": "healthy_after_rollback",
+      "kind": "real_socket_http",
+      "method": "GET",
+      "path": "/api/health",
+      "expected_status": 200,
+      "observed_status": 200,
+      "status_matches": true,
+      "response": {
+        "status": "alive",
+        "timezone": "UTC"
+      }
+    },
+    {
+      "case": "audit_failure_log_privacy",
+      "kind": "security",
+      "rollback_confirmed": true,
+      "response_is_generic": true,
+      "private_exception_marker_in_log": false
+    },
+    {
+      "case": "credential_storage_and_logging",
+      "kind": "security",
+      "password_is_scrypt": true,
+      "session_tokens_are_hashed": true,
+      "raw_secrets_absent_in_logs_and_audit": true
+    },
+    {
+      "case": "admin_authentication",
+      "kind": "real_socket_http",
+      "method": "POST",
+      "path": "/api/auth/login",
+      "expected_status": 200,
+      "observed_status": 200,
+      "status_matches": true,
+      "response": {
+        "user": {
+          "user_id": 1,
+          "login": "lab8_admin",
+          "display_name": "Синтетикалық зертхана әкімшісі",
+          "role_code": "admin",
+          "role_label": "Әкімші",
+          "active": true,
+          "permissions": [
+            "Audit.View",
+            "Dashboard.View",
+            "Documents.Delete",
+            "Documents.Upload",
+            "Documents.View",
+            "Grades.Edit",
+            "Grades.View",
+            "Learning.Manage",
+            "Learning.View",
+            "Roles.Manage",
+            "Sessions.Manage",
+            "Users.Manage"
+          ],
+          "requested_role": null,
+          "approval_status": "approved",
+          "approval_reason": "",
+          "request_review_status": "approved",
+          "student_id": null,
+          "created_at": "2026-11-19T05:16:33.358702Z",
+          "approved_at": null,
+          "student_claim": null
+        },
+        "csrf_token": "[REDACTED]"
+      }
+    },
+    {
+      "case": "logout",
+      "kind": "real_socket_http",
+      "method": "POST",
+      "path": "/api/auth/logout",
+      "expected_status": 200,
+      "observed_status": 200,
+      "status_matches": true,
+      "response": {
+        "message": "Жүйеден шықтыңыз."
+      }
+    },
+    {
+      "case": "after_logout",
+      "kind": "real_socket_http",
+      "method": "GET",
+      "path": "/api/resources",
+      "expected_status": 401,
+      "observed_status": 401,
+      "status_matches": true,
+      "response": {
+        "error": {
+          "code": "unauthenticated",
+          "message": "Жүйеге кіріңіз."
+        }
+      }
+    },
+    {
+      "case": "revoked_token_reuse",
+      "kind": "real_socket_http",
+      "method": "GET",
+      "path": "/api/resources",
+      "expected_status": 401,
+      "observed_status": 401,
+      "status_matches": true,
+      "response": {
+        "error": {
+          "code": "unauthenticated",
+          "message": "Сессия жарамсыз немесе тоқтатылған. Қайта кіріңіз."
+        }
+      }
+    }
+  ]
+}

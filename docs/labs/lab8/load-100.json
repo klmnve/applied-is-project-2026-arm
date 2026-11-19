@@ -1,0 +1,46 @@
+{
+  "requests": 7945,
+  "failures": 3,
+  "error_percent": 0.037759597230962866,
+  "mean_ms": 252.7256364388628,
+  "median_ms": 42,
+  "p95_ms": 1300,
+  "p99_ms": 5200,
+  "min_ms": 9.385400102473795,
+  "max_ms": 12454.647300066426,
+  "requests_per_second": 44.10629744996322,
+  "measurement_start_epoch": 1795065866.959805,
+  "measurement_end_epoch": 1795066047.101072,
+  "status_counts": {
+    "200": 7942,
+    "500": 3
+  },
+  "errors": [
+    {
+      "method": "GET",
+      "name": "resources/search",
+      "occurrences": 2,
+      "error": "Expected 200; received 500"
+    },
+    {
+      "method": "GET",
+      "name": "resources/rooms",
+      "occurrences": 1,
+      "error": "Expected 200; received 500"
+    }
+  ],
+  "users": 100,
+  "configured_seconds": 180,
+  "locust_exit_code": 1,
+  "server_cpu_mean_percent_one_core": 44.873743016759775,
+  "server_cpu_max_percent_one_core": 76.6,
+  "server_rss_mean_mib": 94.06568610335195,
+  "server_rss_max_mib": 102.29296875,
+  "system_cpu_mean_percent": 37.36424581005586,
+  "resource_samples": 179,
+  "observed_peak_users": 100,
+  "observed_window_seconds": 180.14126706123352,
+  "system_memory_used_mean_mib": 6982.920521997206,
+  "resource_sampling_source": "independent psutil sampler on actual server interpreter, not Windows venv launcher",
+  "resource_sample_window": "1 second sample end within [Locust start+1 second, Locust end]"
+}

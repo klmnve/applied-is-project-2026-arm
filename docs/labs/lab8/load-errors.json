@@ -1,0 +1,19 @@
+{
+  "scenario_users": 100,
+  "failed_http_requests": 3,
+  "http_status": 500,
+  "request_groups": {
+    "resources/search": 2,
+    "resources/rooms": 1
+  },
+  "observed_server_error_events": 3,
+  "exception_class": "sqlite3.OperationalError",
+  "exception_message": "database is locked",
+  "observed_call_chain": [
+    "current_principal",
+    "Store.connect",
+    "BEGIN IMMEDIATE"
+  ],
+  "inference_limit": "Confirms failure mechanism for error events; does not independently attribute every high-latency response.",
+  "safe_evidence": "No raw traceback, machine path, password, session cookie, or token included."
+}

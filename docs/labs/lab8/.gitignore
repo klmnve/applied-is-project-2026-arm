@@ -1,0 +1,2 @@
+# The load harness writes local server and Locust logs alongside the measurements.
+*.log

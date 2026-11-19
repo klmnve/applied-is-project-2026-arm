@@ -1,0 +1,32 @@
+{
+  "requests": 1181,
+  "failures": 0,
+  "error_percent": 0.0,
+  "mean_ms": 21.653341321936264,
+  "median_ms": 16,
+  "p95_ms": 48,
+  "p99_ms": 80,
+  "min_ms": 9.486000053584576,
+  "max_ms": 144.43970005959272,
+  "requests_per_second": 9.872217620089355,
+  "measurement_start_epoch": 1795065563.289531,
+  "measurement_end_epoch": 1795065683.5087092,
+  "status_counts": {
+    "200": 1181
+  },
+  "errors": [],
+  "users": 20,
+  "configured_seconds": 120,
+  "locust_exit_code": 0,
+  "server_cpu_mean_percent_one_core": 10.926890756302521,
+  "server_cpu_max_percent_one_core": 25.0,
+  "server_rss_mean_mib": 44.792903098739494,
+  "server_rss_max_mib": 47.81640625,
+  "system_cpu_mean_percent": 37.21764705882353,
+  "resource_samples": 119,
+  "observed_peak_users": 20,
+  "observed_window_seconds": 120.21917819976807,
+  "system_memory_used_mean_mib": 6991.08974527311,
+  "resource_sampling_source": "independent psutil sampler on actual server interpreter, not Windows venv launcher",
+  "resource_sample_window": "1 second sample end within [Locust start+1 second, Locust end]"
+}

@@ -1,0 +1,23 @@
+{
+  "tool": "Bandit 1.9.4",
+  "command": "python -m bandit -r app -f json -o artifacts/lab8/bandit-final.json --exit-zero",
+  "scan_target": "app",
+  "lines_of_code": 7863,
+  "generated_at_utc": "2026-11-19T05:18:49Z",
+  "severity_counts": {
+    "low": 24,
+    "medium": 24,
+    "high": 0
+  },
+  "rule_counts": {
+    "B101": 22,
+    "B105": 2,
+    "B608": 24
+  },
+  "scan_errors": 0,
+  "details": {
+    "B608": "SQL construction notices. Reviewed query shapes use fixed SQL identifiers or conditions and bound user values. Notices do not establish exploitability.",
+    "B101": "Assertions flagged because Python -O removes them. Application authorization uses explicit checks.",
+    "B105": "Two matching strings are an audit action name and its description, not passwords."
+  }
+}

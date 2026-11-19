@@ -1,0 +1,20 @@
+flowchart TD
+    B["Браузер"]
+    UI["Пайдаланушы интерфейсі<br/>Streamlit және негізгі АРМ"]
+    API["API интерфейстері<br/>FastAPI маршруттары және Pydantic"]
+    SEC["Қауіпсіздік компоненттері<br/>Origin және CSRF тексерістері<br/>Қате жауабын шектеу"]
+    AUTH["Аутентификация және авторизация<br/>Сессия, рөл және рұқсат"]
+    SERVER["Серверлік бизнес логика<br/>Жабдықтар және атомарлы аудит"]
+    DB[("SQLite<br/>Resources, Users, Sessions, AuditLogs")]
+    TEST["Оқшауланған тексеру<br/>pytest, requests және Locust"]
+    B -->|"Форма және іздеу"| UI
+    UI -->|"HTTP JSON және cookie"| API
+    API -->|"Middleware және Depends"| SEC
+    SEC --> AUTH
+    AUTH <-->|"Сессия мен құқықты оқу"| DB
+    AUTH -->|"Рұқсат берілген сұрау"| SERVER
+    SERVER <-->|"SQLModel және SQLite транзакциясы"| DB
+    SERVER -->|"HTTP мәртебе және JSON"| API
+    API -->|"Нәтиже немесе қауіпсіз қате"| UI
+    TEST -->|"Тест дерегі бар HTTP сұраулар"| API
+    TEST -.->|"Rollback және тұтастық тексерісі"| DB

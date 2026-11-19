@@ -161,6 +161,7 @@ Browser сценарийіне Playwright Chromium қажет: алғашынд�
 
 - [1–4 зертханалық жұмыс есебі](docs/labs/REPORT.md) және [20 бақылау жауабы](docs/labs/CONTROL_ANSWERS.md).
 - [5–7 зертханалық жұмыс есебі](docs/labs/REPORT_5_7.md) және [15 бақылау жауабы](docs/labs/CONTROL_ANSWERS_5_7.md).
+- 8 зертханалық жұмыстың HTTP, SQLite, Locust, қауіпсіздік және GitHub Actions нәтижелері. [Есеп](docs/labs/REPORT_8.md) · [12 бақылау жауабы](docs/labs/CONTROL_ANSWERS_8.md).
 - [Код ревьюы және тексеру шектері](docs/labs/REVIEW_5_7.md).
 - [Кафедра АРМ-ының толық қазақша нұсқаулығы](docs/USER_GUIDE_KK.md).
 
