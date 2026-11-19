@@ -563,9 +563,9 @@ def test_http_audit_failure_rolls_back_and_hides_exception_from_uvicorn_log(live
         with sqlite3.connect(live_system.database) as connection:
             connection.execute("DROP TRIGGER IF EXISTS lab8_fail_resource_audit")
     assert live_system.snapshot() == before
-    # A subsequent request gives Uvicorn a chance to finish handling/logging the
-    # previous failure; checking only the ASGI response would miss log leakage.
-    live_system.request(admin, "healthy_after_rollback", "GET", "/api/health", 200)
+    # Uvicorn may close the affected connection after a downstream exception.
+    with live_system.client() as probe:
+        live_system.request(probe, "healthy_after_rollback", "GET", "/api/health", 200)
     log_text = live_system.log_path.read_text(encoding="utf-8", errors="replace")
     leaked = PRIVATE_DIAGNOSTIC in log_text
     live_system.evidence.append(
@@ -578,6 +578,7 @@ def test_http_audit_failure_rolls_back_and_hides_exception_from_uvicorn_log(live
         }
     )
     assert not leaked, "Synthetic private exception details leaked into Uvicorn logs"
+    assert "Request failed: IntegrityError" in log_text
 
 
 def test_http_cookies_hashes_and_logs_do_not_retain_raw_credentials(live_system, admin):
